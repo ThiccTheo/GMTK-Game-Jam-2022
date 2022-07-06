@@ -5,7 +5,6 @@ Player Player::player;
 
 Player::Player()
 {
-	player = *this;
 	body.setSize(sf::Vector2f(16.f, 16.f));
 }
 

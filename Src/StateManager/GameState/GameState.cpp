@@ -4,7 +4,6 @@
 
 void GameState::init()
 {
-	Player player;
 }
 
 void GameState::run()
