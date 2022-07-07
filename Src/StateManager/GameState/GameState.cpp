@@ -1,4 +1,5 @@
 #include <utility>
+#include <cmath>
 
 #include "GameState.hpp"
 #include "../../Scene/Scene.hpp"
@@ -34,7 +35,7 @@ void GameState::run()
 
 		Tile::update();
 		Player::update(deltaTime, e);
-		centerCamera();
+		updateCamera();
 		Scene::window.setView(camera);
 		Scene::window.clear(sf::Color::White);
 		Tile::draw();
@@ -43,9 +44,12 @@ void GameState::run()
 	}
 }
 
-void GameState::centerCamera()
+void GameState::updateCamera()
 {
-	auto& [x, y] { Player::player.body.getPosition() };
+	auto& [playerX, playerY] { Player::player.body.getPosition() };
+	auto& [cameraX, cameraY] { camera.getCenter() };
 
-	camera.setCenter(x, y);
+	camera.setCenter(std::lerp(cameraX, playerX, 0.5f), std::lerp(cameraY, playerY, 0.5f));
+
+
 }

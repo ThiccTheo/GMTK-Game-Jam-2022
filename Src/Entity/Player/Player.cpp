@@ -7,8 +7,8 @@
 Player Player::player;
 const sf::Vector2f Player::bodySize{ 16.f, 16.f };
 const sf::Vector2f Player::terminalVelocity{ 200.f, 200.f };
-const float Player::gravity{ 10.f };
-const float Player::friction{ 2.f };
+const float Player::gravity{ 9.8f };
+const float Player::friction{ 5.f };
 
 Player::Player() = default;
 

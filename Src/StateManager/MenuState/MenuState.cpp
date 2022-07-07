@@ -2,7 +2,7 @@
 
 #include "MenuState.hpp"
 #include "../../Scene/Scene.hpp"
-#include "../GameState/GameState.hpp"
+#include "../StateManager.hpp"
 
 void MenuState::init()
 {
@@ -19,8 +19,7 @@ void MenuState::run()
 			case sf::Event::KeyPressed:
 				if (e.key.code == sf::Keyboard::Space)
 				{
-					states.emplace(std::make_unique<GameState>());
-					checkState();
+					addState(StateId::gameState);
 				}
 				break;
 		}

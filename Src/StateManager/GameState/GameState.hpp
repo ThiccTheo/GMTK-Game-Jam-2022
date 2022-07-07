@@ -10,5 +10,5 @@ public:
 	void init() override;
 	void run() override;
 private:
-	void centerCamera();
+	void updateCamera();
 };	

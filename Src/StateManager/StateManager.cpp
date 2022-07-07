@@ -1,5 +1,7 @@
 #include "StateManager.hpp"
 #include "../Scene/Scene.hpp"
+#include "GameState/GameState.hpp"
+#include "MenuState/MenuState.hpp"
 
 std::stack<std::unique_ptr<StateManager>> StateManager::states;
 
@@ -9,6 +11,34 @@ void StateManager::checkState()
 	{
 		states.top()->init();
 		states.top()->run();
+	}
+}
+
+void StateManager::addState(const StateId stateId)
+{
+	switch (stateId)
+	{
+		case StateId::menuState:
+			states.emplace(std::make_unique<MenuState>());
+			checkState();
+			break;
+		case StateId::gameState:
+			states.emplace(std::make_unique<GameState>());
+			checkState();
+			break;
+	}
+}
+
+const bool StateManager::removeState()
+{
+	if (!states.empty())
+	{
+		states.pop();
+		return true;
+	}
+	else
+	{
+		return false;
 	}
 }
 
