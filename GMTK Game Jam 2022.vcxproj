@@ -153,6 +153,7 @@
     <ClCompile Include="Src\ResourceManager\ResourceManager.cpp" />
     <ClCompile Include="Src\Main.cpp" />
     <ClCompile Include="Src\StateManager\StateManager.cpp" />
+    <ClCompile Include="Src\Entity\Tile\Tile.cpp" />
     <ClCompile Include="Tools\PerlinNoise\PerlinNoise.cpp" />
     <ClCompile Include="Tools\ScopedTimer\ScopedTimer.cpp" />
   </ItemGroup>
@@ -164,6 +165,7 @@
     <ClInclude Include="Src\Scene\Scene.hpp" />
     <ClInclude Include="Src\ResourceManager\ResourceManager.hpp" />
     <ClInclude Include="Src\StateManager\StateManager.hpp" />
+    <ClInclude Include="Src\Entity\Tile\Tile.hpp" />
     <ClInclude Include="Tools\PerlinNoise\PerlinNoise.hpp" />
     <ClInclude Include="Tools\ScopedTimer\ScopedTimer.hpp" />
   </ItemGroup>

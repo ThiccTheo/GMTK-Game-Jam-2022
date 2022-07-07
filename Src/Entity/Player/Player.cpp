@@ -12,7 +12,7 @@ const float Player::friction{ 2.f };
 
 Player::Player() = default;
 
-Player::Player(const sf::Vector2i& indices) : Entity(indices, bodySize, OriginSpot::bottomCenter)
+Player::Player(const sf::Vector2i& indices) : Entity(indices, bodySize, OriginSpot::middleCenter)
 {
 	isGrounded = false;
 	velocity = sf::Vector2f(0.f, 0.f);
@@ -83,6 +83,7 @@ void Player::update(const float deltaTime, const sf::Event& e)
 	{
 		player.isGrounded = false;
 	}
+
 }
 
 void Player::draw()
