@@ -46,10 +46,12 @@ void GameState::run()
 
 void GameState::updateCamera()
 {
-	auto& [playerX, playerY] { Player::player.body.getPosition() };
-	auto& [cameraX, cameraY] { camera.getCenter() };
+	const auto& [playerX, playerY] { Player::player.body.getPosition() };
+	const auto& [cameraX, cameraY] { camera.getCenter() };
 
-	camera.setCenter(std::lerp(cameraX, playerX, 0.5f), std::lerp(cameraY, playerY, 0.5f));
-
-
+	camera.setCenter
+	(
+		std::clamp(std::lerp(cameraX, playerX, 0.5f), 0.f, 1000.f), //test values
+		std::clamp(std::lerp(cameraY, playerY, 0.5f), 0.f, 1000.f)  //test values
+	);
 }
