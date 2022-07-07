@@ -14,6 +14,7 @@ Player::Player() = default;
 
 Player::Player(const sf::Vector2i& indices) : Entity(indices, bodySize, OriginSpot::bottomCenter)
 {
+	isGrounded = false;
 	velocity = sf::Vector2f(0.f, 0.f);
 	jumpPower = 10000;
 	normalizedDirection = sf::Vector2i(1, 1);
@@ -72,8 +73,6 @@ void Player::update(const float deltaTime, const sf::Event& e)
 	
 	player.body.move(player.velocity * deltaTime);
 
-	player.body.setScale(sf::Vector2f(player.normalizedDirection));
-
 	if (player.body.getPosition().y > Scene::window.getSize().y)
 	{
 		player.body.setPosition(player.body.getPosition().x, Scene::window.getSize().y + 1.f);
@@ -88,9 +87,6 @@ void Player::update(const float deltaTime, const sf::Event& e)
 
 void Player::draw()
 {
-	sf::RenderStates renderStates;
-	renderStates.texture = &ResourceManager::textureMap[TextureId::player];
-
 	sf::VertexArray vertexArray;
 	vertexArray.setPrimitiveType(sf::Quads);
 	vertexArray.resize(4);
@@ -107,12 +103,23 @@ void Player::draw()
 	vertexArray[2].position = player.mesh[2];
 	vertexArray[3].position = player.mesh[3];
 
-	vertexArray[0].texCoords = sf::Vector2f(0.f, 0.f);
-	vertexArray[1].texCoords = sf::Vector2f(bodySize.x, 0.f);
-	vertexArray[2].texCoords = sf::Vector2f(bodySize);
-	vertexArray[3].texCoords = sf::Vector2f(0.f, bodySize.y);
+	switch (player.normalizedDirection.x)
+	{
+		case 1:
+			vertexArray[0].texCoords = sf::Vector2f(0.f, 0.f);
+			vertexArray[1].texCoords = sf::Vector2f(bodySize.x, 0.f);
+			vertexArray[2].texCoords = sf::Vector2f(bodySize);
+			vertexArray[3].texCoords = sf::Vector2f(0.f, bodySize.y);
+			break;
+		case -1:
+			vertexArray[0].texCoords = sf::Vector2f(bodySize.x, 0.f);
+			vertexArray[1].texCoords = sf::Vector2f(0.f, 0.f);
+			vertexArray[2].texCoords = sf::Vector2f(0.f, bodySize.y);
+			vertexArray[3].texCoords = sf::Vector2f(bodySize);
+			break;
+	}
 
-	Scene::window.draw(vertexArray, renderStates);
+	Scene::window.draw(vertexArray, &ResourceManager::textureMap[TextureId::player]);
 }
 
 
