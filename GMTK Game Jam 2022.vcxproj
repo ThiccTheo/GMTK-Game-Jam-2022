@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Src\StateManager\MenuState\MenuState.cpp" />
     <ClCompile Include="Src\Entity\Entity.cpp" />
     <ClCompile Include="Src\Entity\Player\Player.cpp" />
     <ClCompile Include="Src\StateManager\GameState\GameState.cpp" />
@@ -158,6 +159,7 @@
     <ClCompile Include="Tools\ScopedTimer\ScopedTimer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Src\StateManager\MenuState\MenuState.hpp" />
     <ClInclude Include="Src\Entity\Entity.hpp" />
     <ClInclude Include="Src\Entity\Player\Player.hpp" />
     <ClInclude Include="Src\StateManager\GameState\GameState.hpp" />

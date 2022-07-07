@@ -45,6 +45,9 @@
     <ClCompile Include="Src\Entity\Tile\Tile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Src\StateManager\MenuState\MenuState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\CommonSFML.hpp">
@@ -75,6 +78,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Src\Entity\Tile\Tile.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\StateManager\MenuState\MenuState.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

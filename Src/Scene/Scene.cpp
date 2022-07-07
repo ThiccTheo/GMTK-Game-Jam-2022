@@ -1,6 +1,8 @@
 #include "Scene.hpp"
+#include "../ResourceManager/ResourceManager.hpp"
 
 sf::RenderWindow Scene::window;
+sf::Cursor Scene::cursor;
 
 void Scene::init()
 {
@@ -8,6 +10,9 @@ void Scene::init()
 	window.create(sf::VideoMode(resolution.x, resolution.y), "GMTK Game Jam 2022", sf::Style::Default);
 	window.setVerticalSyncEnabled(true);
 	window.setKeyRepeatEnabled(false);
+
+	cursor.loadFromPixels(ResourceManager::textureMap[TextureId::cursor].copyToImage().getPixelsPtr(), sf::Vector2u(10, 10), sf::Vector2u(0, 0));
+	window.setMouseCursor(cursor);
 }
 
 const sf::Vector2u Scene::determineResolution()
