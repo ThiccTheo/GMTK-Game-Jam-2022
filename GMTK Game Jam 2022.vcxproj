@@ -120,7 +120,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Users\new\OneDrive\Desktop\GMTK Game Jam 2022\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;sfml-network-d.lib;sfml-audio-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;sfml-network-d.lib;sfml-audio-d.lib;%(AdditionalDependencies);opengl32.lib;OpenGL32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -141,11 +141,16 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Users\new\OneDrive\Desktop\GMTK Game Jam 2022\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-graphics.lib;sfml-window.lib;sfml-system.lib;sfml-network.lib;sfml-audio.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-graphics.lib;sfml-window.lib;sfml-system.lib;sfml-network.lib;sfml-audio.lib;%(AdditionalDependencies);opengl32.lib;OpenGL32.lib</AdditionalDependencies>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Include\ImGui\imgui-SFML.cpp" />
+    <ClCompile Include="Include\ImGui\imgui.cpp" />
+    <ClCompile Include="Include\ImGui\imgui_draw.cpp" />
+    <ClCompile Include="Include\ImGui\imgui_tables.cpp" />
+    <ClCompile Include="Include\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="Src\StateManager\MenuState\MenuState.cpp" />
     <ClCompile Include="Src\Entity\Entity.cpp" />
     <ClCompile Include="Src\Entity\Player\Player.cpp" />
@@ -159,6 +164,111 @@
     <ClCompile Include="Tools\ScopedTimer\ScopedTimer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Include\CommonImGui.hpp" />
+    <ClInclude Include="Include\ImGui\imconfig-SFML.h" />
+    <ClInclude Include="Include\ImGui\imconfig.h" />
+    <ClInclude Include="Include\ImGui\imgui-SFML.h" />
+    <ClInclude Include="Include\ImGui\imgui-SFML_export.h" />
+    <ClInclude Include="Include\ImGui\imgui.h" />
+    <ClInclude Include="Include\ImGui\imgui_internal.h" />
+    <ClInclude Include="Include\ImGui\imstb_rectpack.h" />
+    <ClInclude Include="Include\ImGui\imstb_textedit.h" />
+    <ClInclude Include="Include\ImGui\imstb_truetype.h" />
+    <ClInclude Include="Include\SFML\Audio.hpp" />
+    <ClInclude Include="Include\SFML\Audio\AlResource.hpp" />
+    <ClInclude Include="Include\SFML\Audio\Export.hpp" />
+    <ClInclude Include="Include\SFML\Audio\InputSoundFile.hpp" />
+    <ClInclude Include="Include\SFML\Audio\Listener.hpp" />
+    <ClInclude Include="Include\SFML\Audio\Music.hpp" />
+    <ClInclude Include="Include\SFML\Audio\OutputSoundFile.hpp" />
+    <ClInclude Include="Include\SFML\Audio\Sound.hpp" />
+    <ClInclude Include="Include\SFML\Audio\SoundBuffer.hpp" />
+    <ClInclude Include="Include\SFML\Audio\SoundBufferRecorder.hpp" />
+    <ClInclude Include="Include\SFML\Audio\SoundFileFactory.hpp" />
+    <ClInclude Include="Include\SFML\Audio\SoundFileReader.hpp" />
+    <ClInclude Include="Include\SFML\Audio\SoundFileWriter.hpp" />
+    <ClInclude Include="Include\SFML\Audio\SoundRecorder.hpp" />
+    <ClInclude Include="Include\SFML\Audio\SoundSource.hpp" />
+    <ClInclude Include="Include\SFML\Audio\SoundStream.hpp" />
+    <ClInclude Include="Include\SFML\Config.hpp" />
+    <ClInclude Include="Include\SFML\Graphics.hpp" />
+    <ClInclude Include="Include\SFML\Graphics\BlendMode.hpp" />
+    <ClInclude Include="Include\SFML\Graphics\CircleShape.hpp" />
+    <ClInclude Include="Include\SFML\Graphics\Color.hpp" />
+    <ClInclude Include="Include\SFML\Graphics\ConvexShape.hpp" />
+    <ClInclude Include="Include\SFML\Graphics\Drawable.hpp" />
+    <ClInclude Include="Include\SFML\Graphics\Export.hpp" />
+    <ClInclude Include="Include\SFML\Graphics\Font.hpp" />
+    <ClInclude Include="Include\SFML\Graphics\Glsl.hpp" />
+    <ClInclude Include="Include\SFML\Graphics\Glyph.hpp" />
+    <ClInclude Include="Include\SFML\Graphics\Image.hpp" />
+    <ClInclude Include="Include\SFML\Graphics\PrimitiveType.hpp" />
+    <ClInclude Include="Include\SFML\Graphics\Rect.hpp" />
+    <ClInclude Include="Include\SFML\Graphics\RectangleShape.hpp" />
+    <ClInclude Include="Include\SFML\Graphics\RenderStates.hpp" />
+    <ClInclude Include="Include\SFML\Graphics\RenderTarget.hpp" />
+    <ClInclude Include="Include\SFML\Graphics\RenderTexture.hpp" />
+    <ClInclude Include="Include\SFML\Graphics\RenderWindow.hpp" />
+    <ClInclude Include="Include\SFML\Graphics\Shader.hpp" />
+    <ClInclude Include="Include\SFML\Graphics\Shape.hpp" />
+    <ClInclude Include="Include\SFML\Graphics\Sprite.hpp" />
+    <ClInclude Include="Include\SFML\Graphics\Text.hpp" />
+    <ClInclude Include="Include\SFML\Graphics\Texture.hpp" />
+    <ClInclude Include="Include\SFML\Graphics\Transform.hpp" />
+    <ClInclude Include="Include\SFML\Graphics\Transformable.hpp" />
+    <ClInclude Include="Include\SFML\Graphics\Vertex.hpp" />
+    <ClInclude Include="Include\SFML\Graphics\VertexArray.hpp" />
+    <ClInclude Include="Include\SFML\Graphics\VertexBuffer.hpp" />
+    <ClInclude Include="Include\SFML\Graphics\View.hpp" />
+    <ClInclude Include="Include\SFML\Network.hpp" />
+    <ClInclude Include="Include\SFML\Network\Export.hpp" />
+    <ClInclude Include="Include\SFML\Network\Ftp.hpp" />
+    <ClInclude Include="Include\SFML\Network\Http.hpp" />
+    <ClInclude Include="Include\SFML\Network\IpAddress.hpp" />
+    <ClInclude Include="Include\SFML\Network\Packet.hpp" />
+    <ClInclude Include="Include\SFML\Network\Socket.hpp" />
+    <ClInclude Include="Include\SFML\Network\SocketHandle.hpp" />
+    <ClInclude Include="Include\SFML\Network\SocketSelector.hpp" />
+    <ClInclude Include="Include\SFML\Network\TcpListener.hpp" />
+    <ClInclude Include="Include\SFML\Network\TcpSocket.hpp" />
+    <ClInclude Include="Include\SFML\Network\UdpSocket.hpp" />
+    <ClInclude Include="Include\SFML\OpenGL.hpp" />
+    <ClInclude Include="Include\SFML\System.hpp" />
+    <ClInclude Include="Include\SFML\System\Clock.hpp" />
+    <ClInclude Include="Include\SFML\System\Err.hpp" />
+    <ClInclude Include="Include\SFML\System\Export.hpp" />
+    <ClInclude Include="Include\SFML\System\FileInputStream.hpp" />
+    <ClInclude Include="Include\SFML\System\InputStream.hpp" />
+    <ClInclude Include="Include\SFML\System\Lock.hpp" />
+    <ClInclude Include="Include\SFML\System\MemoryInputStream.hpp" />
+    <ClInclude Include="Include\SFML\System\Mutex.hpp" />
+    <ClInclude Include="Include\SFML\System\NonCopyable.hpp" />
+    <ClInclude Include="Include\SFML\System\Sleep.hpp" />
+    <ClInclude Include="Include\SFML\System\String.hpp" />
+    <ClInclude Include="Include\SFML\System\Thread.hpp" />
+    <ClInclude Include="Include\SFML\System\ThreadLocal.hpp" />
+    <ClInclude Include="Include\SFML\System\ThreadLocalPtr.hpp" />
+    <ClInclude Include="Include\SFML\System\Time.hpp" />
+    <ClInclude Include="Include\SFML\System\Utf.hpp" />
+    <ClInclude Include="Include\SFML\System\Vector2.hpp" />
+    <ClInclude Include="Include\SFML\System\Vector3.hpp" />
+    <ClInclude Include="Include\SFML\Window.hpp" />
+    <ClInclude Include="Include\SFML\Window\Clipboard.hpp" />
+    <ClInclude Include="Include\SFML\Window\Context.hpp" />
+    <ClInclude Include="Include\SFML\Window\ContextSettings.hpp" />
+    <ClInclude Include="Include\SFML\Window\Cursor.hpp" />
+    <ClInclude Include="Include\SFML\Window\Event.hpp" />
+    <ClInclude Include="Include\SFML\Window\Export.hpp" />
+    <ClInclude Include="Include\SFML\Window\GlResource.hpp" />
+    <ClInclude Include="Include\SFML\Window\Joystick.hpp" />
+    <ClInclude Include="Include\SFML\Window\Keyboard.hpp" />
+    <ClInclude Include="Include\SFML\Window\Mouse.hpp" />
+    <ClInclude Include="Include\SFML\Window\Sensor.hpp" />
+    <ClInclude Include="Include\SFML\Window\Touch.hpp" />
+    <ClInclude Include="Include\SFML\Window\VideoMode.hpp" />
+    <ClInclude Include="Include\SFML\Window\Window.hpp" />
+    <ClInclude Include="Include\SFML\Window\WindowHandle.hpp" />
+    <ClInclude Include="Include\SFML\Window\WindowStyle.hpp" />
     <ClInclude Include="Src\StateManager\MenuState\MenuState.hpp" />
     <ClInclude Include="Src\Entity\Entity.hpp" />
     <ClInclude Include="Src\Entity\Player\Player.hpp" />
@@ -170,6 +280,17 @@
     <ClInclude Include="Src\Entity\Tile\Tile.hpp" />
     <ClInclude Include="Tools\PerlinNoise\PerlinNoise.hpp" />
     <ClInclude Include="Tools\ScopedTimer\ScopedTimer.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Include\SFML\Audio\SoundFileFactory.inl" />
+    <None Include="Include\SFML\Graphics\Glsl.inl" />
+    <None Include="Include\SFML\Graphics\Rect.inl" />
+    <None Include="Include\SFML\System\String.inl" />
+    <None Include="Include\SFML\System\Thread.inl" />
+    <None Include="Include\SFML\System\ThreadLocalPtr.inl" />
+    <None Include="Include\SFML\System\Utf.inl" />
+    <None Include="Include\SFML\System\Vector2.inl" />
+    <None Include="Include\SFML\System\Vector3.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
