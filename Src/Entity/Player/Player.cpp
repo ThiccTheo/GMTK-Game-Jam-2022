@@ -9,6 +9,7 @@ const sf::Vector2f Player::bodySize{ 16.f, 16.f };
 const sf::Vector2f Player::terminalVelocity{ 200.f, 200.f };
 const float Player::gravity{ 9.8f };
 const float Player::friction{ 5.f };
+const float Player::jumpPower{ 10000.f };
 
 Player::Player() = default;
 
@@ -16,7 +17,6 @@ Player::Player(const sf::Vector2i& indices) : Entity(indices, bodySize, OriginSp
 {
 	isGrounded = false;
 	velocity = sf::Vector2f(0.f, 0.f);
-	jumpPower = 10000;
 	normalizedDirection = sf::Vector2i(1, 1);
 }
 
@@ -32,7 +32,7 @@ void Player::update(const float deltaTime, const sf::Event& e)
 		case sf::Event::KeyPressed:
 			if (e.key.code == sf::Keyboard::W && player.isGrounded)
 			{
-				player.jump();
+				player.velocity.y -= jumpPower;
 			}
 			break;
 	}
@@ -68,10 +68,10 @@ void Player::update(const float deltaTime, const sf::Event& e)
 		}
 	}
 	
-	player.velocity.x = std::clamp(player.velocity.x, -terminalVelocity.x, terminalVelocity.x);
-	player.velocity.y = std::clamp(player.velocity.y, -terminalVelocity.y, terminalVelocity.y);
+	player.velocity.x = std::clamp(player.velocity.x * deltaTime, -terminalVelocity.x * deltaTime, terminalVelocity.x * deltaTime);
+	player.velocity.y = std::clamp(player.velocity.y * deltaTime, -terminalVelocity.y * deltaTime, terminalVelocity.y * deltaTime);
 	
-	player.body.move(player.velocity * deltaTime);
+	player.body.move(player.velocity);
 
 	if (player.body.getPosition().y > Scene::window.getSize().y)
 	{
@@ -121,10 +121,4 @@ void Player::draw()
 	}
 
 	Scene::window.draw(vertexArray, &ResourceManager::textureMap[TextureId::player]);
-}
-
-
-void Player::jump()
-{
-	velocity.y -= jumpPower;
 }

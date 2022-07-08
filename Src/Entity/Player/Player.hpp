@@ -20,14 +20,12 @@ private:
 	static const sf::Vector2f terminalVelocity;
 	static const float gravity;
 	static const float friction;
+	static const float jumpPower;
 
 	sf::Vector2i normalizedDirection;
 
 	bool isGrounded;
-	int jumpPower;
 
 	sf::Vector2f velocity;
-
-	void jump();
 };
 

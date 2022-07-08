@@ -35,7 +35,7 @@ void GameState::run()
 
 		Tile::update();
 		Player::update(deltaTime, e);
-		updateCamera();
+		updateCamera(deltaTime);
 		Scene::window.setView(camera);
 		Scene::window.clear(sf::Color::White);
 		Tile::draw();
@@ -44,14 +44,22 @@ void GameState::run()
 	}
 }
 
-void GameState::updateCamera()
+void GameState::updateCamera(const float deltaTime)
 {
 	const auto& [playerX, playerY] { Player::player.body.getPosition() };
 	const auto& [cameraX, cameraY] { camera.getCenter() };
 
+	//direct follow
+	//camera.setCenter
+	//(
+	//	std::clamp(playerX, 0.f, 1000.f), //test values
+	//	std::clamp(playerY, 0.f, 1000.f)  //test values
+	//);
+
+	//lerping
 	camera.setCenter
 	(
-		std::clamp(std::lerp(cameraX, playerX, 0.5f), 0.f, 1000.f), //test values
-		std::clamp(std::lerp(cameraY, playerY, 0.5f), 0.f, 1000.f)  //test values
+		std::clamp(std::lerp(cameraX, playerX, 10.f * deltaTime), 0.f, 10000.f), //test values
+		std::clamp(std::lerp(cameraY, playerY, 10.f * deltaTime), 0.f, 10000.f)  //test values
 	);
 }
