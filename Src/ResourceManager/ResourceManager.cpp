@@ -7,7 +7,7 @@ std::unordered_map<FontId, sf::Font> ResourceManager::fontMap;
 bool ResourceManager::load()
 {
 	return
-		textureMap[TextureId::cursor].loadFromFile("Data/Texture/Cursor.png") &&
-		textureMap[TextureId::player].loadFromFile("Data/Texture/Player.png") &&
-		textureMap[TextureId::tile].loadFromFile("Data/Texture/Tile.png");
+		textureMap[TextureId::cursor].loadFromFile("Data/Textures/Cursor.png") &&
+		textureMap[TextureId::player].loadFromFile("Data/Textures/Player.png") &&
+		textureMap[TextureId::tile].loadFromFile("Data/Textures/Tile.png");
 }
