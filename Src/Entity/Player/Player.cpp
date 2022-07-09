@@ -4,10 +4,8 @@
 #include "../../Scene/Scene.hpp"
 #include "../../ResourceManager/ResourceManager.hpp"
 #include "CommonImGui.hpp"
-#include "../Tile/Tile.hpp"
 
 Player Player::player;
-const sf::Vector2f Player::bodySize{ 16.f, 16.f };
 sf::Vector2f Player::terminalVelocity{ 140.f, 350.f };
 float Player::moveSpeed{ 25.f };
 float Player::jumpPower{ 80.f };
@@ -16,11 +14,11 @@ float Player::friction{ 10.f };
 
 Player::Player() = default;
 
-Player::Player(const sf::Vector2i& indices) : Entity(indices, bodySize, OriginSpot::middleCenter)
+Player::Player(const sf::Vector2i& indices) : Entity(indices, bodySizeMap[EntityType::player], OriginSpot::middleCenter)
 {
 	isGrounded = false;
 	velocity = sf::Vector2f(0.f, 0.f);
-	normalizedDirection = sf::Vector2i(1, 0);
+	normalizedDirection = sf::Vector2i(1, 1);
 }
 
 void Player::update(const float deltaTime, const sf::Event& e)
@@ -34,23 +32,7 @@ void Player::update(const float deltaTime, const sf::Event& e)
 	ImGui::SliderFloat("Jump Power", &jumpPower, 0.f, 1000.f);
 	ImGui::End();
 
-	if (player.velocity.y > 0.f)
-	{
-		player.normalizedDirection.y = 1;
-	}
-	else if (player.velocity.y < 0.f)
-	{
-		player.normalizedDirection.y = -1;
-	}
-	else
-	{
-		player.normalizedDirection.y = 0;
-	}
-
-	if (!player.isGrounded)
-	{
-		player.velocity.y += gravity * deltaTime;
-	}
+	player.velocity.y += gravity * deltaTime;
 
 	switch (e.type)
 	{
@@ -58,7 +40,6 @@ void Player::update(const float deltaTime, const sf::Event& e)
 			if (e.key.code == sf::Keyboard::W && player.isGrounded)
 			{
 				player.velocity.y -= jumpPower;
-				player.normalizedDirection.y = -1;
 				player.isGrounded = false;
 			}
 			break;
@@ -95,11 +76,17 @@ void Player::update(const float deltaTime, const sf::Event& e)
 		}
 	}
 	
+	player.normalizedDirection.y = player.velocity.y >= 0.f ? 1 : -1;
+
 	player.velocity.x = std::clamp(player.velocity.x, -terminalVelocity.x, terminalVelocity.x);
 	player.velocity.y = std::clamp(player.velocity.y, -terminalVelocity.y, terminalVelocity.y);
 
-	player.body.move(player.velocity * deltaTime);
-	player.handleCollisions(EntityType::tile);
+	player.body.move(player.velocity.x * deltaTime, 0.f);
+	player.resolveTileCollisions('x');
+
+	player.body.move(0.f, player.velocity.y * deltaTime);
+	player.resolveTileCollisions('y');
+
 }
 
 void Player::draw()
@@ -124,56 +111,82 @@ void Player::draw()
 	{
 		case 1:
 			vertexArray[0].texCoords = sf::Vector2f(0.f, 0.f);
-			vertexArray[1].texCoords = sf::Vector2f(bodySize.x, 0.f);
-			vertexArray[2].texCoords = sf::Vector2f(bodySize);
-			vertexArray[3].texCoords = sf::Vector2f(0.f, bodySize.y);
+			vertexArray[1].texCoords = sf::Vector2f(bodySizeMap[EntityType::player].x, 0.f);
+			vertexArray[2].texCoords = sf::Vector2f(bodySizeMap[EntityType::player]);
+			vertexArray[3].texCoords = sf::Vector2f(0.f, bodySizeMap[EntityType::player].y);
 			break;
 		case -1:
-			vertexArray[0].texCoords = sf::Vector2f(bodySize.x, 0.f);
+			vertexArray[0].texCoords = sf::Vector2f(bodySizeMap[EntityType::player].x, 0.f);
 			vertexArray[1].texCoords = sf::Vector2f(0.f, 0.f);
-			vertexArray[2].texCoords = sf::Vector2f(0.f, bodySize.y);
-			vertexArray[3].texCoords = sf::Vector2f(bodySize);
+			vertexArray[2].texCoords = sf::Vector2f(0.f, bodySizeMap[EntityType::player].y);
+			vertexArray[3].texCoords = sf::Vector2f(bodySizeMap[EntityType::player]);
 			break;
 	}
 
 	Scene::window.draw(vertexArray, &ResourceManager::textureMap[TextureId::player]);
 }
 
-void Player::handleCollisions(const EntityType entityType)
+void Player::resolveTileCollisions(const char axis)
 {
-	const auto& [playerX, playerY] {body.getPosition()};
+	const Entity* collider{ nullptr };
 
-	switch (entityType)
+	switch (tolower(axis))
 	{
-		case EntityType::tile:
-			for (auto& tile : Tile::tiles)
-			{	
-				const auto& [tileX, tileY] {tile.body.getPosition()};
+		case 'x':
+			collider = player.collisionHandler(EntityType::tile);
 
-				if (tile.body.getGlobalBounds().intersects(body.getGlobalBounds()))
+			if (collider != nullptr)
+			{
+				if (player.velocity.x > 0.f)
 				{
-					if (normalizedDirection.y == 1) //falling
-					{
-						body.setPosition(playerX, tileY - (0.5f * Tile::bodySize.y + 0.5f * bodySize.y));
-						isGrounded = true;
-						velocity.y = 0.f;
-					}
-					else if (normalizedDirection.y == -1) //jumping
-					{
-						body.setPosition(playerX, tileY + (0.5f * Tile::bodySize.y + 0.5f * bodySize.y) + 1.f);
-					}
-
-					if (normalizedDirection.x == 1) //moving right
-					{
-						body.setPosition(tileX - (0.5f * Tile::bodySize.x + 0.5f * bodySize.x), playerY);
-					}
-					else if (normalizedDirection.x == -1) //moving left
-					{
-						body.setPosition(tileX + (0.5f * Tile::bodySize.x + 0.5f * bodySize.x), playerY);
-					}
-
-					break;
+					player.body.setPosition
+					(
+						collider->body.getPosition().x - (bodySizeMap[EntityType::tile].x / 2.f + bodySizeMap[EntityType::player].x / 2.f),
+						player.body.getPosition().y
+					);
 				}
+				else if (player.velocity.x < 0.f)
+				{
+					player.body.setPosition
+					(
+						collider->body.getPosition().x + (bodySizeMap[EntityType::tile].x / 2.f + bodySizeMap[EntityType::player].x / 2.f),
+						player.body.getPosition().y
+					);
+				}
+
+				player.velocity.x = 0.f;
+			}
+			break;
+		case 'y':
+			collider = player.collisionHandler(EntityType::tile);
+
+			if (collider != nullptr)
+			{
+				if (player.velocity.y > 0.f)
+				{
+					player.body.setPosition
+					(
+						player.body.getPosition().x,
+						collider->body.getPosition().y - (bodySizeMap[EntityType::tile].y / 2.f + bodySizeMap[EntityType::player].y / 2.f)
+					);
+
+					player.velocity.y = 0.f;
+					player.isGrounded = true;
+				}
+				else if (player.velocity.y < 0.f)
+				{
+					player.body.setPosition
+					(
+						player.body.getPosition().x,
+						collider->body.getPosition().y + (bodySizeMap[EntityType::tile].y / 2.f + bodySizeMap[EntityType::player].y / 2.f)
+					);
+
+					player.velocity.y = 1.f;
+				}
+			}
+			else
+			{
+				player.isGrounded = false;
 			}
 			break;
 	}

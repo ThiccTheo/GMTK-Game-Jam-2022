@@ -9,11 +9,9 @@ class Tile : public Entity
 {
 public:
 	static std::vector<Tile> tiles;
-	static const sf::Vector2f bodySize;
 
 	Tile(const sf::Vector2i& indices);
 	static void update();
 	static void draw();
-	void handleCollisions(const EntityType entityType) override;
 };
 

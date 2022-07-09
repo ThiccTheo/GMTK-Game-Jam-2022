@@ -71,7 +71,7 @@ void GameState::loadLevel()
 	{
 		for (int x{ 0 }; x < 100; x++)
 		{
-			if (x != 1)
+			if (y != 2 && y != 1)
 			{
 				Tile::tiles.emplace_back(sf::Vector2i(x, y));
 			}
