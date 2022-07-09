@@ -15,12 +15,15 @@ public:
 	Player(const Player&) = delete;
 	static void update(const float deltaTime, const sf::Event& e);
 	static void draw();
+	void handleCollisions(const EntityType entityType) override;
 
 private:
-	static const sf::Vector2f terminalVelocity;
-	static const float gravity;
-	static const float friction;
-	static const float jumpPower;
+	//values should be const during project release:
+	static sf::Vector2f terminalVelocity;
+	static float gravity;
+	static float friction;
+	static float moveSpeed;
+	static float jumpPower;
 
 	sf::Vector2i normalizedDirection;
 

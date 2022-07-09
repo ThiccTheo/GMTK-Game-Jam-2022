@@ -40,3 +40,7 @@ Entity::Entity(const sf::Vector2i& indices, const sf::Vector2f& bodySize, const 
 
     body.setPosition(16.f * indices.x, 16.f * indices.y); //change to tile size for 16.f
 }
+
+void Entity::handleCollisions(const EntityType entityType)
+{
+}

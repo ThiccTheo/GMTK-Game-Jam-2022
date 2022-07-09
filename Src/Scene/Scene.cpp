@@ -1,18 +1,23 @@
 #include "Scene.hpp"
 #include "../ResourceManager/ResourceManager.hpp"
+#include "CommonImGui.hpp"
 
 sf::RenderWindow Scene::window;
 sf::Cursor Scene::cursor;
+bool Scene::isFocused;
 
 void Scene::init()
 {
 	const sf::Vector2u& resolution{ determineResolution() };
 	window.create(sf::VideoMode(resolution.x, resolution.y), "GMTK Game Jam 2022", sf::Style::Default);
+	isFocused = true;
 	window.setVerticalSyncEnabled(true);
 	window.setKeyRepeatEnabled(false);
 
 	cursor.loadFromPixels(ResourceManager::textureMap[TextureId::cursor].copyToImage().getPixelsPtr(), sf::Vector2u(10, 10), sf::Vector2u(0, 0));
 	window.setMouseCursor(cursor);
+
+	ImGui::SFML::Init(Scene::window);
 }
 
 const sf::Vector2u Scene::determineResolution()

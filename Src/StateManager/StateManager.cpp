@@ -52,12 +52,18 @@ const sf::Event StateManager::eventHandler()
 		case sf::Event::Closed:
 			Scene::window.close();
 			break;
+		case sf::Event::LostFocus:
+			Scene::isFocused = false;
+			break;
+		case sf::Event::GainedFocus:
+			Scene::isFocused = true;
+			break;
 		}
 
 		return e;
 	}
 
-	return sf::Event();
+	return {};
 }
 
 void StateManager::init()

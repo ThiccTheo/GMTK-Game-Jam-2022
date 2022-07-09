@@ -11,4 +11,5 @@ public:
 	void run() override;
 private:
 	void updateCamera(const float deltaTime);
+	void loadLevel();
 };	

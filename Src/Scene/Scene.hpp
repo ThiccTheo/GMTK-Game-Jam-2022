@@ -7,6 +7,7 @@ class Scene
 {
 public:
 	static sf::RenderWindow window;
+	static bool isFocused;
 
 	static void init();
 private:

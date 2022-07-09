@@ -14,5 +14,6 @@ public:
 	Tile(const sf::Vector2i& indices);
 	static void update();
 	static void draw();
+	void handleCollisions(const EntityType entityType) override;
 };
 

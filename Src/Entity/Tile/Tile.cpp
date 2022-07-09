@@ -1,6 +1,7 @@
 #include "Tile.hpp"
 #include "../../ResourceManager/ResourceManager.hpp"
 #include "../../Scene/Scene.hpp"
+#include "../Player/Player.hpp"
 
 std::vector<Tile> Tile::tiles;
 const sf::Vector2f Tile::bodySize{ 16.f, 16.f };
@@ -11,6 +12,13 @@ Tile::Tile(const sf::Vector2i& indices): Entity(indices, bodySize, OriginSpot::m
 
 void Tile::update()
 {
+	for (auto& tile : tiles)
+	{
+		if (tile.body.getGlobalBounds().intersects(Player::player.body.getGlobalBounds()))
+		{
+
+		}
+	}
 }
 
 void Tile::draw()
@@ -46,4 +54,8 @@ void Tile::draw()
 	}
 
 	Scene::window.draw(vertexArray, &ResourceManager::textureMap[TextureId::tile]);
+}
+
+void Tile::handleCollisions(const EntityType entityType)
+{
 }
